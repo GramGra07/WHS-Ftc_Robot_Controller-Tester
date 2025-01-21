@@ -20,17 +20,16 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class Robot {
-    private LinearOpMode opMode = null;
     private final Map<HardwareType, Pair<Integer, ArrayList>> hardMap = new EnumMap<>(HardwareType.class);
+    private final double[] indexes = blankArray(HardwareType.values().length);
+    private LinearOpMode opMode = null;
+    private RevBlinkinLedDriver.BlinkinPattern blinkinPattern;
+
     {
         for (HardwareType type : HardwareType.values()) {
             hardMap.put(type, new Pair<>(type.ordinal(), new ArrayList<>()));
         }
     }
-
-    private RevBlinkinLedDriver.BlinkinPattern blinkinPattern;
-
-    private final double[] indexes = blankArray(HardwareType.values().length);
 
     public Robot(LinearOpMode myOpMode) {
         opMode = myOpMode;
@@ -96,24 +95,28 @@ public class Robot {
             opMode.telemetry.update();
         }
     }
+
     public void distanceTelemetry() {
         for (int i = 0; i < indexes[hardMap.get(HardwareType.DISTANCE_SENSOR).first]; i++) {
             opMode.telemetry.addData("Distance (cm) " + i + " Distance", ((com.qualcomm.robotcore.hardware.DistanceSensor) hardMap.get(HardwareType.DISTANCE_SENSOR).second.get(i)).getDistance(DistanceUnit.CM));
             opMode.telemetry.update();
         }
     }
+
     public void potentTelemetry() {
         for (int i = 0; i < indexes[hardMap.get(HardwareType.POTENTIOMETER).first]; i++) {
             opMode.telemetry.addData("Potentiometer " + i + " Voltage", ((com.qualcomm.robotcore.hardware.AnalogInput) hardMap.get(HardwareType.POTENTIOMETER).second.get(i)).getVoltage());
             opMode.telemetry.update();
         }
     }
+
     public void touchTelemetry() {
         for (int i = 0; i < indexes[hardMap.get(HardwareType.TOUCH_SENSOR).first]; i++) {
             opMode.telemetry.addData("Touch " + i + " Pressed", ((com.qualcomm.robotcore.hardware.TouchSensor) hardMap.get(HardwareType.TOUCH_SENSOR).second.get(i)).isPressed());
             opMode.telemetry.update();
         }
     }
+
     public void magnetTelemetry() {
         for (int i = 0; i < indexes[hardMap.get(HardwareType.MAGNETIC_LIMIT_SWITCH).first]; i++) {
             opMode.telemetry.addData("Limit " + i + " Pressed", ((com.qualcomm.robotcore.hardware.DigitalChannel) hardMap.get(HardwareType.MAGNETIC_LIMIT_SWITCH).second.get(i)).getState());

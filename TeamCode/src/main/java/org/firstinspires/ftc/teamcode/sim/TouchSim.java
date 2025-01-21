@@ -1,28 +1,21 @@
 package org.firstinspires.ftc.teamcode.sim;
 
-import static org.firstinspires.ftc.teamcode.util.Util.progressTelemetry;
-
-import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.Config;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.Simulator;
-
-import java.util.Arrays;
 
 public class TouchSim extends Simulator {
     LinearOpMode opMode;
     ElapsedTime runtime = new ElapsedTime();
+    Robot robot;
 
     public TouchSim(LinearOpMode opMode) {
         runtime.reset();
         this.opMode = opMode;
         robot = new Robot(opMode);
     }
-
-    Robot robot;
 
     @Override
     public void init() {

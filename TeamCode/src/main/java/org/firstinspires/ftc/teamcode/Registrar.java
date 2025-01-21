@@ -13,6 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Registrar {
+    private static final List<Class<? extends OpMode>> opModeClasses = new ArrayList<>();
+
+    static {
+        opModeClasses.add(Tester.class);
+    }
+
     private Registrar() {
     }
 
@@ -22,12 +28,6 @@ public final class Registrar {
                 .setGroup("Testers")
                 .setFlavor(OpModeMeta.Flavor.TELEOP)
                 .build();
-    }
-
-    private static final List<Class<? extends OpMode>> opModeClasses = new ArrayList<>();
-
-    static {
-        opModeClasses.add(Tester.class);
     }
 
     @OpModeRegistrar

@@ -16,6 +16,17 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class Util {
+    public static Map<HardwareType, PortType> portMap = new EnumMap<>(Map.of(
+            HardwareType.MOTOR, PortType.MOTOR,
+            HardwareType.SERVO, PortType.SERVO,
+            HardwareType.BLINKIN, PortType.SERVO,
+            HardwareType.TOUCH_SENSOR, PortType.DIGITAL,
+            HardwareType.POTENTIOMETER, PortType.ANALOG,
+            HardwareType.COLOR_SENSOR, PortType.I2C,
+            HardwareType.DISTANCE_SENSOR, PortType.I2C,
+            HardwareType.MAGNETIC_LIMIT_SWITCH, PortType.DIGITAL
+    ));
+
     public static double count(HardwareType hardwareType) {
         return hardwareMap.entrySet().stream().filter(entry -> entry.getKey() == HardwareType.MOTOR).count();
     }
@@ -49,7 +60,7 @@ public class Util {
                 return Servo.class;
             case BLINKIN:
                 return RevBlinkinLedDriver.class;
-                case TOUCH_SENSOR:
+            case TOUCH_SENSOR:
                 return com.qualcomm.robotcore.hardware.TouchSensor.class;
             case POTENTIOMETER:
                 return com.qualcomm.robotcore.hardware.AnalogInput.class;
@@ -62,17 +73,6 @@ public class Util {
         }
         return null;
     }
-
-    public static Map<HardwareType, PortType> portMap = new EnumMap<>(Map.of(
-            HardwareType.MOTOR, PortType.MOTOR,
-            HardwareType.SERVO, PortType.SERVO,
-            HardwareType.BLINKIN, PortType.SERVO,
-            HardwareType.TOUCH_SENSOR, PortType.DIGITAL,
-            HardwareType.POTENTIOMETER, PortType.ANALOG,
-            HardwareType.COLOR_SENSOR, PortType.I2C,
-            HardwareType.DISTANCE_SENSOR, PortType.I2C,
-            HardwareType.MAGNETIC_LIMIT_SWITCH, PortType.DIGITAL
-    ));
 
     public static IllegalArgumentException approve(LinearOpMode opMode) {
         double motorLimit = 4;

@@ -12,14 +12,13 @@ import java.util.Arrays;
 public class MotorSim extends Simulator {
     LinearOpMode opMode;
     ElapsedTime runtime = new ElapsedTime();
+    Robot robot;
 
     public MotorSim(LinearOpMode opMode) {
         runtime.reset();
         this.opMode = opMode;
         robot = new Robot(opMode);
     }
-
-    Robot robot;
 
     @Override
     public void init() {

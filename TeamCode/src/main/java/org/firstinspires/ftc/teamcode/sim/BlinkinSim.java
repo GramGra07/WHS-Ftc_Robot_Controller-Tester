@@ -15,14 +15,14 @@ import java.util.Arrays;
 public class BlinkinSim extends Simulator {
     LinearOpMode opMode;
     ElapsedTime runtime = new ElapsedTime();
+    Robot robot;
+    double index = 0;
 
     public BlinkinSim(LinearOpMode opMode) {
         runtime.reset();
         this.opMode = opMode;
         robot = new Robot(opMode);
     }
-
-    Robot robot;
 
     @Override
     public void init() {
@@ -40,8 +40,6 @@ public class BlinkinSim extends Simulator {
         opMode.telemetry.addLine("Plug in blinkins according to configuration, then run the opMode. It will set pattern to " + Arrays.toString(Config.blinkinPattern));
         opMode.telemetry.update();
     }
-
-    double index = 0;
 
     @Override
     public void run() {
