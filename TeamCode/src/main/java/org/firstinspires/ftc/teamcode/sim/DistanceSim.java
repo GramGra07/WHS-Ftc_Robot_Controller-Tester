@@ -1,0 +1,52 @@
+package org.firstinspires.ftc.teamcode.sim;
+
+import static org.firstinspires.ftc.teamcode.util.Util.progressTelemetry;
+
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.Config;
+import org.firstinspires.ftc.teamcode.Robot;
+import org.firstinspires.ftc.teamcode.Simulator;
+
+import java.util.Arrays;
+
+public class DistanceSim extends Simulator {
+    LinearOpMode opMode;
+    ElapsedTime runtime = new ElapsedTime();
+
+    public DistanceSim(LinearOpMode opMode) {
+        runtime.reset();
+        this.opMode = opMode;
+        robot = new Robot(opMode);
+    }
+
+    Robot robot;
+
+    @Override
+    public void init() {
+        robot.init();
+        telemetryInit();
+    }
+
+    @Override
+    public void start() {
+        runtime.reset();
+    }
+
+    @Override
+    public void telemetryInit() {
+        opMode.telemetry.addLine("Plug in the distance sensor according to configuration, then run the opMode. It will display the distance sensed by the sensor.");
+        opMode.telemetry.update();
+    }
+
+    @Override
+    public void run() {
+    }
+
+    @Override
+    public void telemetry() {
+        robot.distanceTelemetry();
+    }
+}

@@ -4,14 +4,19 @@ import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 
 import org.firstinspires.ftc.teamcode.enums.HardwareType;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public final class Config {
-    public static Map<HardwareType, String> hardwareMap = Map.of(
-            HardwareType.MOTOR, "pitchMotor",
-            HardwareType.SERVO, "pitchServo1",
-            HardwareType.BLINKIN, "blink"
-    );
+    //TODO: If you have other ones, add them here
+    public static Map<HardwareType, String> hardwareMap = new HashMap<>();
+
+    static {
+        hardwareMap.put(HardwareType.MOTOR, "pitchMotor");
+        hardwareMap.put(HardwareType.SERVO, "pitchServo1");
+        hardwareMap.put(HardwareType.BLINKIN, "blink");
+    }
+
     public static double delay = 4;
     public static double[] motorPower = {0, -1, 1, 0};
     public static double[] servoPosition = {0, -1, 0, 1, 0};
