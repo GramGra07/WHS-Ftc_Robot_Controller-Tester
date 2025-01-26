@@ -10,5 +10,6 @@ public enum HardwareType {
     COLOR_SENSOR,
     DISTANCE_SENSOR,
     MAGNETIC_LIMIT_SWITCH,
+    CAMERA,
 }
 

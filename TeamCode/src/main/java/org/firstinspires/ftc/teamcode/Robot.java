@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.teamcode.Config.hardwareMap;
-import static org.firstinspires.ftc.teamcode.util.Util.approve;
+import static org.firstinspires.ftc.teamcode.util.Approvals.approve;
+import static org.firstinspires.ftc.teamcode.util.Recommenders.recommendIMU;
+import static org.firstinspires.ftc.teamcode.util.Recommenders.recommendMotor;
 import static org.firstinspires.ftc.teamcode.util.Util.getHardwareType;
 import static org.firstinspires.ftc.teamcode.util.Util.getSimClass;
-import static org.firstinspires.ftc.teamcode.util.Util.recommendMotor;
 
 import android.util.Pair;
 
@@ -16,13 +17,15 @@ import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.enums.HardwareType;
-import org.firstinspires.ftc.teamcode.util.HardwareDeviceNotFound;
 import org.firstinspires.ftc.teamcode.util.Util;
+import org.firstinspires.ftc.teamcode.util.exceptions.HardwareDeviceNotFound;
+import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +40,8 @@ public class Robot {
     public Robot(LinearOpMode myOpMode) {
         opMode = myOpMode;
     }
-    private void setupMaps(){
+
+    private void setupMaps() {
         deviceMap.clear();
         hardMap.clear();
         for (HardwareType hardwareType : HardwareType.values()) {
@@ -63,7 +67,7 @@ public class Robot {
         }
     }
 
-    public void checkCount(HardwareType type){
+    public void checkCount(HardwareType type) {
         double count = count(type);
         if (count == 0) {
             throw new HardwareDeviceNotFound("No " + type + " found in hardwareMap");
@@ -97,6 +101,12 @@ public class Robot {
             case IMU:
                 IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
                 (getHardware(hardwareName, IMU.class)).initialize(parameters);
+                break;
+            case CAMERA:
+                VisionPortal portal = new VisionPortal.Builder()
+                        .setCamera(getHardware(hardwareName, WebcamName.class))
+                        .addProcessor(new AprilTagProcessor.Builder().build())
+                        .build();
                 break;
         }
     }
@@ -133,7 +143,7 @@ public class Robot {
             IMU imu = getHardware(name, IMU.class);
             opMode.telemetry.addData(name + " Angles", imu.getRobotYawPitchRollAngles());
             opMode.telemetry.addData(name + " Type", imu.getClass().getCanonicalName());
-            opMode.telemetry.addData(name + " Recommendation ", Util.approveIMU(imu));
+            opMode.telemetry.addData(name + " Recommendation ", recommendIMU(imu));
             opMode.telemetry.addLine();
         }
         opMode.telemetry.update();

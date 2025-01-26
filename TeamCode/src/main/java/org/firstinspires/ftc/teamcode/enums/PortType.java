@@ -6,4 +6,5 @@ public enum PortType {
     I2C,
     ANALOG,
     DIGITAL,
+    USB
 }
