@@ -19,7 +19,7 @@ public class TouchSim extends Simulator {
 
     @Override
     public void init() {
-        robot.init();
+        robot.init(this);
         telemetryInit();
     }
 
@@ -36,6 +36,7 @@ public class TouchSim extends Simulator {
 
     @Override
     public void run() {
+        telemetry();
     }
 
     @Override

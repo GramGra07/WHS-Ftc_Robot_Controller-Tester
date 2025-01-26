@@ -22,7 +22,7 @@ public class ServoSim extends Simulator {
 
     @Override
     public void init() {
-        robot.init();
+        robot.init(this);
         telemetryInit();
     }
 

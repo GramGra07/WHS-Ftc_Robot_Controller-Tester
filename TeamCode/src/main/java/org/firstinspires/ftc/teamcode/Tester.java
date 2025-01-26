@@ -3,13 +3,13 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.enums.HardwareType;
-import org.firstinspires.ftc.teamcode.util.Simulators;
+import org.firstinspires.ftc.teamcode.util.Util;
 
 public class Tester extends LinearOpMode {
     Simulator simulator;
 
     public Tester(HardwareType type) {
-        simulator = new Simulators().getSimulator(type, this);
+        simulator = Util.getSimulator(type, this);
     }
 
     @Override

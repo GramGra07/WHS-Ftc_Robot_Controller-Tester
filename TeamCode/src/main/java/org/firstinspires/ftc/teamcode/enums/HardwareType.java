@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.enums;
 public enum HardwareType {
     MOTOR,
     SERVO,
+    IMU,
     BLINKIN,
     TOUCH_SENSOR,
     POTENTIOMETER,
@@ -10,3 +11,4 @@ public enum HardwareType {
     DISTANCE_SENSOR,
     MAGNETIC_LIMIT_SWITCH,
 }
+

@@ -6,12 +6,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.Simulator;
 
-public class ColorSim extends Simulator {
+public class IMUSim extends Simulator {
     LinearOpMode opMode;
     ElapsedTime runtime = new ElapsedTime();
     Robot robot;
 
-    public ColorSim(LinearOpMode opMode) {
+    public IMUSim(LinearOpMode opMode) {
         runtime.reset();
         this.opMode = opMode;
         robot = new Robot(opMode);
@@ -30,7 +30,7 @@ public class ColorSim extends Simulator {
 
     @Override
     public void telemetryInit() {
-        opMode.telemetry.addLine("Plug in the color sensor according to configuration, then run the opMode. It will display the color sensed by the sensor.");
+        opMode.telemetry.addLine("This will show you angles returned and the type of IMU it is.");
         opMode.telemetry.update();
     }
 
@@ -41,6 +41,7 @@ public class ColorSim extends Simulator {
 
     @Override
     public void telemetry() {
-        robot.colorTelemetry();
+        robot.imuTelemetry();
     }
+
 }
