@@ -22,6 +22,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.enums.HardwareType;
 import org.firstinspires.ftc.teamcode.util.Util;
 import org.firstinspires.ftc.teamcode.util.exceptions.HardwareDeviceNotFound;
+import org.firstinspires.ftc.teamcode.util.exceptions.HardwareNotFoundOnRobot;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
@@ -62,7 +63,11 @@ public class Robot {
         for (Map.Entry<String, HardwareType> entry : hardwareMap.entrySet()) {
             HardwareType hardwareType = entry.getValue();
             String hardwareName = entry.getKey();
-            hardMap.put(hardwareName, new Pair(opMode.hardwareMap.get(Util.getClass(hardwareType), hardwareName), hardwareType));
+            try {
+                hardMap.put(hardwareName, new Pair(opMode.hardwareMap.get(Util.getClass(hardwareType), hardwareName), hardwareType));
+            }catch (NullPointerException e) {
+                throw new HardwareNotFoundOnRobot("No " + hardwareName + " found in hardwareMap configuration");
+            }
             initDevice(simulator, hardwareName);
         }
     }
@@ -90,6 +95,7 @@ public class Robot {
         if (!getSimClass(getType(hardwareName)).equals(simulator.getClass())) return;
         switch (getType(hardwareName)) {
             case MOTOR:
+            case EXTERNAL_ENCODER:
                 (getHardware(hardwareName, DcMotor.class)).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 break;
             case SERVO:
@@ -156,6 +162,15 @@ public class Robot {
             opMode.telemetry.addData(name + " Power", motor.getPower());
             opMode.telemetry.addData(name + " Position", motor.getCurrentPosition());
             opMode.telemetry.addLine(recommendMotor(motor));
+            opMode.telemetry.addLine();
+        }
+        opMode.telemetry.update();
+    }
+    public void encoderTelemetry(){
+        for (int i = 0; i < count(HardwareType.MOTOR); i++) {
+            String name = deviceMap.get(HardwareType.MOTOR).get(i);
+            DcMotor motor = getHardware(name, DcMotor.class);
+            opMode.telemetry.addData(name + " Position", motor.getCurrentPosition());
             opMode.telemetry.addLine();
         }
         opMode.telemetry.update();

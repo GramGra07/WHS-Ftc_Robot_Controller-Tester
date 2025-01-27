@@ -11,5 +11,6 @@ public enum HardwareType {
     DISTANCE_SENSOR,
     MAGNETIC_LIMIT_SWITCH,
     CAMERA,
+    EXTERNAL_ENCODER,
 }
 

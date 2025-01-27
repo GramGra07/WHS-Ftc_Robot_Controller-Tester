@@ -14,6 +14,7 @@ import org.firstinspires.ftc.teamcode.sim.BlinkinSim;
 import org.firstinspires.ftc.teamcode.sim.CameraSim;
 import org.firstinspires.ftc.teamcode.sim.ColorSim;
 import org.firstinspires.ftc.teamcode.sim.DistanceSim;
+import org.firstinspires.ftc.teamcode.sim.EncoderSim;
 import org.firstinspires.ftc.teamcode.sim.IMUSim;
 import org.firstinspires.ftc.teamcode.sim.MagnetSim;
 import org.firstinspires.ftc.teamcode.sim.MotorSim;
@@ -27,18 +28,20 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class Util {
-    public static Map<HardwareType, PortType> portMap = new EnumMap<>(Map.of(
-            HardwareType.MOTOR, PortType.MOTOR,
-            HardwareType.SERVO, PortType.SERVO,
-            HardwareType.BLINKIN, PortType.SERVO,
-            HardwareType.TOUCH_SENSOR, PortType.DIGITAL,
-            HardwareType.POTENTIOMETER, PortType.ANALOG,
-            HardwareType.COLOR_SENSOR, PortType.I2C,
-            HardwareType.DISTANCE_SENSOR, PortType.I2C,
-            HardwareType.MAGNETIC_LIMIT_SWITCH, PortType.DIGITAL,
-            HardwareType.IMU, PortType.I2C,
-            HardwareType.CAMERA, PortType.USB
-    ));
+    public static Map<HardwareType, PortType> portMap = new EnumMap<>(HardwareType.class);
+    static{
+        portMap.put(HardwareType.MOTOR, PortType.MOTOR);
+        portMap.put(HardwareType.SERVO, PortType.SERVO);
+        portMap.put(HardwareType.BLINKIN, PortType.SERVO);
+        portMap.put(HardwareType.TOUCH_SENSOR, PortType.DIGITAL);
+        portMap.put(HardwareType.POTENTIOMETER, PortType.ANALOG);
+        portMap.put(HardwareType.COLOR_SENSOR, PortType.I2C);
+        portMap.put(HardwareType.DISTANCE_SENSOR, PortType.I2C);
+        portMap.put(HardwareType.MAGNETIC_LIMIT_SWITCH, PortType.DIGITAL);
+        portMap.put(HardwareType.IMU, PortType.I2C);
+        portMap.put(HardwareType.CAMERA, PortType.USB);
+        portMap.put(HardwareType.EXTERNAL_ENCODER, PortType.MOTOR);
+    }
     public static Map<HardwareType, Class<? extends Simulator>> simulatorMap = new EnumMap<>(HardwareType.class);
 
     static {
@@ -52,6 +55,7 @@ public class Util {
         simulatorMap.put(HardwareType.MAGNETIC_LIMIT_SWITCH, MagnetSim.class);
         simulatorMap.put(HardwareType.IMU, IMUSim.class);
         simulatorMap.put(HardwareType.CAMERA, CameraSim.class);
+        simulatorMap.put(HardwareType.EXTERNAL_ENCODER, EncoderSim.class);
     }
 
     public static double count(HardwareType hardwareType) {
@@ -78,6 +82,7 @@ public class Util {
     public static java.lang.Class getClass(HardwareType type) {
         switch (type) {
             case MOTOR:
+            case EXTERNAL_ENCODER:
                 return com.qualcomm.robotcore.hardware.DcMotor.class;
             case SERVO:
                 return com.qualcomm.robotcore.hardware.Servo.class;
@@ -97,6 +102,7 @@ public class Util {
                 return com.qualcomm.robotcore.hardware.DigitalChannel.class;
             case CAMERA:
                 return WebcamName.class;
+
         }
         return null;
     }
@@ -123,6 +129,8 @@ public class Util {
                 return new IMUSim(opMode);
             case CAMERA:
                 return new CameraSim(opMode);
+            case EXTERNAL_ENCODER:
+                return new EncoderSim(opMode);
             default:
                 throw new UnknownHardwareType("Unknown HardwareType: " + type);
         }
@@ -153,7 +161,10 @@ public class Util {
             return HardwareType.IMU;
         } else if (simulator instanceof CameraSim) {
             return HardwareType.CAMERA;
-        } else {
+        } else if (simulator instanceof EncoderSim){
+            return HardwareType.EXTERNAL_ENCODER;
+        }
+        else {
             throw new UnknownSim("Unknown Simulator: " + simulator);
         }
     }
