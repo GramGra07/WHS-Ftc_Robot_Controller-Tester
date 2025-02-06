@@ -6,6 +6,7 @@ public class Recommenders {
     static double[] motorPowers = {};
     static double[] motorPositions = {};
 
+    // This method recommends whether to keep or replace a motor as well as verifications and reasons
     public static String recommendMotor(com.qualcomm.robotcore.hardware.DcMotor motor) {
         String recommend = "";
         double pose = motor.getCurrentPosition();
@@ -26,6 +27,7 @@ public class Recommenders {
         return recommend;
     }
 
+    // This method recommends whether to keep or replace an IMU
     public static String recommendIMU(IMU imu) {
         String str = imu.getClass().getCanonicalName();
         String name = "";

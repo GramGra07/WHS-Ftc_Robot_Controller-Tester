@@ -15,6 +15,7 @@ public final class Config {
     public static double[] servoPosition = {0, -1, 0, 1, 0};
     public static RevBlinkinLedDriver.BlinkinPattern[] blinkinPattern = {RevBlinkinLedDriver.BlinkinPattern.BLACK, RevBlinkinLedDriver.BlinkinPattern.BLUE, RevBlinkinLedDriver.BlinkinPattern.BREATH_BLUE, RevBlinkinLedDriver.BlinkinPattern.BREATH_RED, RevBlinkinLedDriver.BlinkinPattern.COLOR_WAVES_LAVA_PALETTE, RevBlinkinLedDriver.BlinkinPattern.COLOR_WAVES_OCEAN_PALETTE,};
 
+    // Add your hardware here
     static {
         hardwareMap.put("pitchMotor", HardwareType.MOTOR);
         hardwareMap.put("pitchServo1", HardwareType.SERVO);

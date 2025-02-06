@@ -12,6 +12,7 @@ import java.util.Map;
 
 public class Approvals {
 
+    // This method checks if the number of devices of each type is within the limits
     public static void approve(LinearOpMode opMode) {
         double motorLimit = 4;
         double servoLimit = 6;

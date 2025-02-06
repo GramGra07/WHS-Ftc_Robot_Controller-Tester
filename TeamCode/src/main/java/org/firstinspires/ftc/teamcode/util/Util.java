@@ -28,6 +28,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class Util {
+    // maps port type to the hardware type
     public static Map<HardwareType, PortType> portMap = new EnumMap<>(HardwareType.class);
     static{
         portMap.put(HardwareType.MOTOR, PortType.MOTOR);
@@ -42,6 +43,7 @@ public class Util {
         portMap.put(HardwareType.CAMERA, PortType.USB);
         portMap.put(HardwareType.EXTERNAL_ENCODER, PortType.MOTOR);
     }
+    // maps the testing simulator to the hardware type
     public static Map<HardwareType, Class<? extends Simulator>> simulatorMap = new EnumMap<>(HardwareType.class);
 
     static {
@@ -58,14 +60,17 @@ public class Util {
         simulatorMap.put(HardwareType.EXTERNAL_ENCODER, EncoderSim.class);
     }
 
+    // counts the number of devices of a certain type
     public static double count(HardwareType hardwareType) {
         return hardwareMap.entrySet().stream().filter(entry -> entry.getValue() == hardwareType).count();
     }
 
+    // counts the number of hubs, 2 if e and c hubs are used
     public static double hubCount(HardwareMap hardwareMap) {
         return hardwareMap.getAll(com.qualcomm.hardware.lynx.LynxModule.class).size();
     }
 
+    // updates the telemetry with the progress of the test
     public static void progressTelemetry(Telemetry telemetry, double len, double progress) {
         telemetry.addLine(progressIndicator(len, progress));
         telemetry.addLine(progressPercent(len, progress));
@@ -79,6 +84,7 @@ public class Util {
         return (int) (progress / len * 100) + "%";
     }
 
+    // gets the class of the hardware type
     public static java.lang.Class getClass(HardwareType type) {
         switch (type) {
             case MOTOR:
@@ -107,6 +113,7 @@ public class Util {
         return null;
     }
 
+    // gets the simulator of the hardware type
     public static Simulator getSimulator(HardwareType type, LinearOpMode opMode) {
         switch (type) {
             case MOTOR:
@@ -136,10 +143,12 @@ public class Util {
         }
     }
 
+    // gets the simulator class of the hardware type
     public static Class<? extends Simulator> getSimClass(HardwareType type) {
         return simulatorMap.get(type);
     }
 
+    // gets the hardware type of the simulator
     public static HardwareType getHardwareType(Simulator simulator) {
         if (simulator instanceof MotorSim) {
             return HardwareType.MOTOR;

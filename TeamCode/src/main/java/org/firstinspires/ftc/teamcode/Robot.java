@@ -32,17 +32,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Robot {
+    // This is a map of hardware types with the names of each device
     private static final Map<HardwareType, ArrayList<String>> deviceMap = new EnumMap<>(HardwareType.class);
-
+    // This is a map of hardware names (unique) with the device initialized and the type of hardware
     private final Map<String, Pair<HardwareDevice, HardwareType>> hardMap = new HashMap<>();
-    private final LinearOpMode opMode;
-    private RevBlinkinLedDriver.BlinkinPattern blinkinPattern;
+    private final LinearOpMode opMode; // generic opmode declaration
+    private RevBlinkinLedDriver.BlinkinPattern blinkinPattern; // pattern for blinkin
 
     public Robot(LinearOpMode myOpMode) {
         opMode = myOpMode;
     }
 
-    private void setupMaps() {
+    private void setupMaps() { // sets up the device map, creates device and hard maps to be used further
         deviceMap.clear();
         hardMap.clear();
         for (HardwareType hardwareType : HardwareType.values()) {
@@ -56,6 +57,7 @@ public class Robot {
         }
     }
 
+    // initialized the robot with the current simulator
     public void init(Simulator simulator) {
         approve(opMode);
         setupMaps();
@@ -72,6 +74,7 @@ public class Robot {
         }
     }
 
+    // simple check to see if the hardware type is present when initializing the robot
     public void checkCount(HardwareType type) {
         double count = count(type);
         if (count == 0) {
@@ -79,18 +82,22 @@ public class Robot {
         }
     }
 
+    // Returns the count of the hardware type
     public double count(HardwareType hardwareType) {
         return deviceMap.get(hardwareType).size();
     }
 
+    // Returns the hardware type of the device with the name
     public HardwareType getType(String name) {
         return hardMap.get(name).second;
     }
 
+    // Returns the hardware device with the name and type, casted to the correct type
     public <T extends HardwareDevice> T getHardware(String name, Class<T> cast) {
         return cast.cast(hardMap.get(name).first);
     }
 
+    // Initializes the devices only for the current simulator
     public void initDevice(Simulator simulator, String hardwareName) {
         if (!getSimClass(getType(hardwareName)).equals(simulator.getClass())) return;
         switch (getType(hardwareName)) {
@@ -116,6 +123,8 @@ public class Robot {
                 break;
         }
     }
+
+    //Setters for individual hardware types
 
 
     public void setPower(double power) {
@@ -143,6 +152,7 @@ public class Robot {
         }
     }
 
+    // Telemetry methods for each hardware type
     public void imuTelemetry() {
         for (int i = 0; i < count(HardwareType.IMU); i++) {
             String name = deviceMap.get(HardwareType.IMU).get(i);
