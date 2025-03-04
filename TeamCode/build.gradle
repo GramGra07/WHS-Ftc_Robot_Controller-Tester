@@ -34,7 +34,12 @@ android {
         jniLibs.useLegacyPackaging true
     }
 }
-
+repositories {
+    maven { url = 'https://maven.brott.dev/' }
+    maven { url ="https://repo.dairy.foundation/releases" }
+    maven { url ="https://repo.dairy.foundation/snapshots" }
+}
 dependencies {
     implementation project(':FtcRobotController')
+    implementation "com.acmerobotics.slothboard:dashboard:0.1.0+0.4.16"
 }
