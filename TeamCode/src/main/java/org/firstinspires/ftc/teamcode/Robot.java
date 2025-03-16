@@ -25,6 +25,7 @@ import org.firstinspires.ftc.teamcode.util.exceptions.HardwareDeviceNotFound;
 import org.firstinspires.ftc.teamcode.util.exceptions.HardwareNotFoundOnRobot;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.bow.BlackAndWhiteDotDetector;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
