@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode.sim;
 
+import static org.firstinspires.ftc.teamcode.util.Util.count;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Config;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.Simulator;
+import org.firstinspires.ftc.teamcode.enums.HardwareType;
 
 import java.util.Arrays;
 
@@ -33,7 +36,6 @@ public class MotorSim extends Simulator {
 
     @Override
     public void telemetryInit() {
-        opMode.telemetry.addLine(String.valueOf(robot.deviceMap));
         opMode.telemetry.addLine("Plug in motors according to configuration, then run the opMode. It will set power to " + Arrays.toString(Config.motorPower));
         opMode.telemetry.update();
     }

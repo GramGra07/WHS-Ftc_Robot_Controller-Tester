@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import static org.firstinspires.ftc.teamcode.Config.hardwareMap;
 import static org.firstinspires.ftc.teamcode.util.Approvals.approve;
 import static org.firstinspires.ftc.teamcode.util.Recommenders.recommendIMU;
-import static org.firstinspires.ftc.teamcode.util.Recommenders.recommendMotor;
+//import static org.firstinspires.ftc.teamcode.util.Recommenders.recommendMotor;
 import static org.firstinspires.ftc.teamcode.util.Util.getHardwareType;
 import static org.firstinspires.ftc.teamcode.util.Util.getSimClass;
 
@@ -132,6 +132,9 @@ public class Robot {
         for (int i = 0; i < count(HardwareType.MOTOR); i++) {
             String name = deviceMap.get(HardwareType.MOTOR).get(i);
             DcMotor motor = getHardware(name, DcMotor.class);
+            if (motor.getMode() == DcMotor.RunMode.STOP_AND_RESET_ENCODER) {
+                motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            }
             motor.setPower(power);
         }
     }
@@ -172,7 +175,7 @@ public class Robot {
             DcMotor motor = getHardware(name, DcMotor.class);
             opMode.telemetry.addData(name + " Power", motor.getPower());
             opMode.telemetry.addData(name + " Position", motor.getCurrentPosition());
-          //  opMode.telemetry.addLine(recommendMotor(motor));
+//            opMode.telemetry.addLine(recommendMotor(motor));
             opMode.telemetry.addLine();
         }
         opMode.telemetry.update();
