@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import static org.firstinspires.ftc.teamcode.Config.hardwareMap;
 import static org.firstinspires.ftc.teamcode.util.Approvals.approve;
 import static org.firstinspires.ftc.teamcode.util.Recommenders.recommendIMU;
-//import static org.firstinspires.ftc.teamcode.util.Recommenders.recommendMotor;
 import static org.firstinspires.ftc.teamcode.util.Util.getHardwareType;
 import static org.firstinspires.ftc.teamcode.util.Util.getSimClass;
 
@@ -16,6 +15,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -38,6 +38,7 @@ public class Robot {
     // This is a map of hardware names (unique) with the device initialized and the type of hardware
     private final Map<String, Pair<HardwareDevice, HardwareType>> hardMap = new HashMap<>();
     private final LinearOpMode opMode; // generic opmode declaration
+    private final ElapsedTime timer = new ElapsedTime();
     private RevBlinkinLedDriver.BlinkinPattern blinkinPattern; // pattern for blinkin
 
     public Robot(LinearOpMode myOpMode) {
@@ -73,6 +74,7 @@ public class Robot {
             }
             initDevice(simulator, hardwareName);
         }
+        timer.reset();
     }
 
     // simple check to see if the hardware type is present when initializing the robot
@@ -105,6 +107,7 @@ public class Robot {
             case MOTOR:
             case EXTERNAL_ENCODER:
                 (getHardware(hardwareName, DcMotor.class)).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                (getHardware(hardwareName, DcMotor.class)).setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 break;
             case SERVO:
                 (getHardware(hardwareName, Servo.class)).setPosition(0);
@@ -127,15 +130,18 @@ public class Robot {
 
     //Setters for individual hardware types
 
-
-    public void setPower(double power) {
+    public void setPower(int target) {
         for (int i = 0; i < count(HardwareType.MOTOR); i++) {
             String name = deviceMap.get(HardwareType.MOTOR).get(i);
             DcMotor motor = getHardware(name, DcMotor.class);
-            if (motor.getMode() == DcMotor.RunMode.STOP_AND_RESET_ENCODER) {
-                motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            motor.setTargetPosition(target);
+            motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            if (motor.isBusy()) {
+                motor.setPower(1);
+            }else{
+                motor.setPower(0);
+                motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
-            motor.setPower(power);
         }
     }
 
@@ -175,9 +181,13 @@ public class Robot {
             DcMotor motor = getHardware(name, DcMotor.class);
             opMode.telemetry.addData(name + " Power", motor.getPower());
             opMode.telemetry.addData(name + " Position", motor.getCurrentPosition());
-//            opMode.telemetry.addLine(recommendMotor(motor));
             opMode.telemetry.addLine();
         }
+        String name = deviceMap.get(HardwareType.MOTOR).get(0);
+        DcMotor motor = getHardware(name, DcMotor.class);
+        opMode.telemetry.addData("Running to ", motor.getTargetPosition());
+        double estimatedTime = 5;
+        opMode.telemetry.addData("Time Elapsed / "+estimatedTime+" sec", timer.seconds());
         opMode.telemetry.update();
     }
     public void encoderTelemetry(){

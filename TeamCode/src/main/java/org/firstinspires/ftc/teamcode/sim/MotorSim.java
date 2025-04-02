@@ -1,14 +1,11 @@
 package org.firstinspires.ftc.teamcode.sim;
 
-import static org.firstinspires.ftc.teamcode.util.Util.count;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Config;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.Simulator;
-import org.firstinspires.ftc.teamcode.enums.HardwareType;
 
 import java.util.Arrays;
 
@@ -16,6 +13,8 @@ public class MotorSim extends Simulator {
     LinearOpMode opMode;
     ElapsedTime runtime = new ElapsedTime();
     Robot robot;
+
+    int ticks = 5000;
 
     public MotorSim(LinearOpMode opMode) {
         runtime.reset();
@@ -36,19 +35,15 @@ public class MotorSim extends Simulator {
 
     @Override
     public void telemetryInit() {
-        opMode.telemetry.addLine("Plug in motors according to configuration, then run the opMode. It will set power to " + Arrays.toString(Config.motorPower));
+        opMode.telemetry.addLine("Plug in motors according to configuration, then run the opMode. It will then drive to " + ticks + " ticks.");
         opMode.telemetry.update();
     }
 
     @Override
     public void run() {
-        double[] powers = Config.motorPower;
-        for (double power : powers) {
-            while (runtime.seconds() < Config.delay && !opMode.isStopRequested()) {
-                robot.setPower(power);
-                telemetry();
-            }
-            runtime.reset();
+        while (!opMode.isStopRequested()) {
+            robot.setPower(ticks);
+            telemetry();
         }
     }
 
