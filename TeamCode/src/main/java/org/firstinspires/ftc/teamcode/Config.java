@@ -17,10 +17,10 @@ public final class Config {
 
     // Add your hardware here
     static {
-        hardwareMap.put("pitchMotor", HardwareType.MOTOR);
-        hardwareMap.put("pitchServo1", HardwareType.SERVO);
-        hardwareMap.put("blink", HardwareType.BLINKIN);
-        hardwareMap.put("imu", HardwareType.IMU);
-        hardwareMap.put("imu2", HardwareType.IMU);
+        hardwareMap.put("genericMotor", HardwareType.MOTOR);
+      //   hardwareMap.put("pitchServo1", HardwareType.SERVO);
+      //  hardwareMap.put("blink", HardwareType.BLINKIN);
+      //  hardwareMap.put("imu", HardwareType.IMU);
+      //  hardwareMap.put("imu2", HardwareType.IMU);
     }
 }

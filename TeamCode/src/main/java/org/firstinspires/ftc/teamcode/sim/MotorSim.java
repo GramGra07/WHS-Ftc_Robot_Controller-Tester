@@ -33,6 +33,7 @@ public class MotorSim extends Simulator {
 
     @Override
     public void telemetryInit() {
+        opMode.telemetry.addLine(String.valueOf(robot.deviceMap));
         opMode.telemetry.addLine("Plug in motors according to configuration, then run the opMode. It will set power to " + Arrays.toString(Config.motorPower));
         opMode.telemetry.update();
     }

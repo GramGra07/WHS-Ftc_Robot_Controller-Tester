@@ -34,7 +34,7 @@ import java.util.Map;
 
 public class Robot {
     // This is a map of hardware types with the names of each device
-    private static final Map<HardwareType, ArrayList<String>> deviceMap = new EnumMap<>(HardwareType.class);
+    public static final Map<HardwareType, ArrayList<String>> deviceMap = new EnumMap<>(HardwareType.class);
     // This is a map of hardware names (unique) with the device initialized and the type of hardware
     private final Map<String, Pair<HardwareDevice, HardwareType>> hardMap = new HashMap<>();
     private final LinearOpMode opMode; // generic opmode declaration
@@ -172,7 +172,7 @@ public class Robot {
             DcMotor motor = getHardware(name, DcMotor.class);
             opMode.telemetry.addData(name + " Power", motor.getPower());
             opMode.telemetry.addData(name + " Position", motor.getCurrentPosition());
-            opMode.telemetry.addLine(recommendMotor(motor));
+          //  opMode.telemetry.addLine(recommendMotor(motor));
             opMode.telemetry.addLine();
         }
         opMode.telemetry.update();
