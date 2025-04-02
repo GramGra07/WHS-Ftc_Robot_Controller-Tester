@@ -33,8 +33,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Robot {
-    // This is a map of hardware types with the names of each device
+    // This is a map of hardware types with the names of each device for each enum
     public static final Map<HardwareType, ArrayList<String>> deviceMap = new EnumMap<>(HardwareType.class);
+
     // This is a map of hardware names (unique) with the device initialized and the type of hardware
     private final Map<String, Pair<HardwareDevice, HardwareType>> hardMap = new HashMap<>();
     private final LinearOpMode opMode; // generic opmode declaration
@@ -49,7 +50,7 @@ public class Robot {
         deviceMap.clear();
         hardMap.clear();
         for (HardwareType hardwareType : HardwareType.values()) {
-            deviceMap.put(hardwareType, new ArrayList<>());
+            deviceMap.put(hardwareType, new ArrayList<>()); // map of hardware types to the names of each device
         }
 
         for (Map.Entry<String, HardwareType> entry : hardwareMap.entrySet()) {
@@ -61,9 +62,9 @@ public class Robot {
 
     // initialized the robot with the current simulator
     public void init(Simulator simulator) {
-        approve(opMode);
+        approve(opMode); // approves the amount of devices
         setupMaps();
-        checkCount(getHardwareType(simulator));
+        checkCount(getHardwareType(simulator)); // checks the count of the hardware type and is under a value
         for (Map.Entry<String, HardwareType> entry : hardwareMap.entrySet()) {
             HardwareType hardwareType = entry.getValue();
             String hardwareName = entry.getKey();
@@ -72,7 +73,7 @@ public class Robot {
             }catch (NullPointerException e) {
                 throw new HardwareNotFoundOnRobot("No " + hardwareName + " found in hardwareMap configuration");
             }
-            initDevice(simulator, hardwareName);
+            initDevice(simulator, hardwareName); // initialized the device within the simulator
         }
         timer.reset();
     }
@@ -129,9 +130,8 @@ public class Robot {
     }
 
     //Setters for individual hardware types
-
     public void setPower(int target) {
-        for (int i = 0; i < count(HardwareType.MOTOR); i++) {
+        for (int i = 0; i < count(HardwareType.MOTOR); i++) { // index through the motors and set powers to the motors
             String name = deviceMap.get(HardwareType.MOTOR).get(i);
             DcMotor motor = getHardware(name, DcMotor.class);
             motor.setTargetPosition(target);
