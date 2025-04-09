@@ -129,24 +129,32 @@ public class Robot {
         }
     }
 
+    private final Map<String, Boolean> motorMap = new HashMap<>();
     //Setters for individual hardware types
     public void setPower(int target) {
+        if (motorMap.isEmpty()){
+            for (int i = 0; i < count(HardwareType.MOTOR); i++) {
+                String name = deviceMap.get(HardwareType.MOTOR).get(i);
+                motorMap.put(name, true);
+            }
+        }
         for (int i = 0; i < count(HardwareType.MOTOR); i++) { // index through the motors and set powers to the motors
             String name = deviceMap.get(HardwareType.MOTOR).get(i);
             DcMotor motor = getHardware(name, DcMotor.class);
-            if (motor.getCurrentPosition() < target) {
+            // control speed
+            if (motor.getCurrentPosition() < target && motorMap.get(name)) {
                 motor.setPower(1);
+            } else if (motor.getCurrentPosition() > 0 && !motorMap.get(name)) { // we can assume that 0 is the travel of - ticks
+                motor.setPower(-1);
             } else {
                 motor.setPower(0);
             }
-//          motor.setTargetPosition(target);
-//          motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//          if (motor.isBusy()) {
-//              motor.setPower(1);
-//          }else{
-//              motor.setPower(0);
-//              motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//          }
+            // switch if past
+            if (motor.getCurrentPosition() >= target && motorMap.get(name)) {
+                motorMap.put(name, false);
+            } else if (motor.getCurrentPosition() <= 0 && !motorMap.get(name)) {
+                motorMap.put(name, true);
+            }
         }
     }
 
