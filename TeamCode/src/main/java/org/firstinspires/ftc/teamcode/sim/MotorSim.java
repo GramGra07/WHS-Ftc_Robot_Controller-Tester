@@ -14,7 +14,7 @@ public class MotorSim extends Simulator {
     ElapsedTime runtime = new ElapsedTime();
     Robot robot;
 
-    int ticks = 5000;
+    int ticks = 10000;
 
     public MotorSim(LinearOpMode opMode) {
         runtime.reset();

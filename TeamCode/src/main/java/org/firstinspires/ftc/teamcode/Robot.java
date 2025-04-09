@@ -134,14 +134,19 @@ public class Robot {
         for (int i = 0; i < count(HardwareType.MOTOR); i++) { // index through the motors and set powers to the motors
             String name = deviceMap.get(HardwareType.MOTOR).get(i);
             DcMotor motor = getHardware(name, DcMotor.class);
-            motor.setTargetPosition(target);
-            motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            if (motor.isBusy()) {
+            if (motor.getCurrentPosition() < target) {
                 motor.setPower(1);
-            }else{
+            } else {
                 motor.setPower(0);
-                motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
+//          motor.setTargetPosition(target);
+//          motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//          if (motor.isBusy()) {
+//              motor.setPower(1);
+//          }else{
+//              motor.setPower(0);
+//              motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//          }
         }
     }
 
@@ -187,7 +192,7 @@ public class Robot {
         DcMotor motor = getHardware(name, DcMotor.class);
         opMode.telemetry.addData("Running to ", motor.getTargetPosition());
         double estimatedTime = 5;
-        opMode.telemetry.addData("Time Elapsed / "+estimatedTime+" sec", timer.seconds());
+        opMode.telemetry.addData("Time Elapsed / "+estimatedTime+" sec", "%.0f", timer.seconds());
         opMode.telemetry.update();
     }
     public void encoderTelemetry(){
