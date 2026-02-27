@@ -15,18 +15,10 @@
 apply from: '../build.common.gradle'
 apply from: '../build.dependencies.gradle'
 
-apply plugin: 'dev.frozenmilk.sinister.sloth.load'
 buildscript {
     repositories {
         mavenCentral()
-        maven {
-            url "https://repo.dairy.foundation/snapshots"
-        }
 
-        maven { url "https://repo.dairy.foundation/releases" }
-    }
-    dependencies {
-        classpath "dev.frozenmilk:Load:0.2.0"
     }
 }
 android {
@@ -38,16 +30,12 @@ android {
 }
 repositories {
     maven { url = 'https://maven.brott.dev/' }
-    maven { url ="https://repo.dairy.foundation/releases" }
-    maven { url ="https://repo.dairy.foundation/snapshots" }
     maven { url = 'https://jitpack.io' }
 }
 dependencies {
     implementation project(':FtcRobotController')
-    implementation "com.acmerobotics.slothboard:dashboard:0.1.1+0.4.16"
-    implementation("dev.frozenmilk.sinister:Sloth:0.2.0")
 
-    implementation "com.github.GramGra07:GentrifiedAppsUtil:2.0.3-dev10.0.1"
+    implementation "com.github.GramGra07:GentrifiedAppsUtil:4.8.9"
 
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
 }

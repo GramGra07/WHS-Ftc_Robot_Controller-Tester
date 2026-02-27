@@ -13,8 +13,10 @@ import org.gentrifiedApps.gentrifiedAppsUtil.config.ConfigMaker;
 import org.gentrifiedApps.gentrifiedAppsUtil.config.ConfigCreator;
 
 public final class ConfigRegistrar {
+    static ConfigMaker bench= new ConfigMaker("BenchMarker");
 
-    static ConfigMaker config = new ConfigMaker("generated");
+
+    static ConfigMaker config = new ConfigMaker("tester");
     static int motorCount = 0;
     static int servoCount = 0;
     static int i2cCount = 0;
@@ -81,6 +83,10 @@ public final class ConfigRegistrar {
 
     static boolean isEnabled = true;
     private ConfigRegistrar() {
+        bench.addMotor("motor", ConfigMaker.ModuleType.CONTROL_HUB, ConfigMaker.MotorType.RevRoboticsUltraplanetaryHDHexMotor,0)
+                .addModule(ConfigMaker.ModuleType.EXPANSION_HUB, "Expansion Hub 1",1)
+                .addDevice("testi2c",ConfigMaker.ModuleType.CONTROL_HUB,ConfigMaker.DeviceType.RevColorSensorV3,3)
+                .addDevice("testi2cFAST",ConfigMaker.ModuleType.CONTROL_HUB,ConfigMaker.DeviceType.RevColorSensorV3,0);
     }
 
     private static OpModeMeta metaForClass(Class<? extends OpMode> cls) {
@@ -95,5 +101,6 @@ public final class ConfigRegistrar {
     public static void register(OpModeManager manager) {
         if (!isEnabled) return;
         manager.register(metaForClass(ConfigCreator.class), new ConfigCreator(config));
+        manager.register(metaForClass(ConfigCreator.class), new ConfigCreator(bench));
     }
 }
