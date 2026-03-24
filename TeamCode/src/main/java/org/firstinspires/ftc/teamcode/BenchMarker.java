@@ -5,7 +5,9 @@ import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe;
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.Alliance;
 import org.gentrifiedApps.gentrifiedAppsUtil.dataStorage.DataStorage;
@@ -40,7 +42,6 @@ public class BenchMarker extends LinearOpMode {
         RevColorSensorV3 c1 = hardwareMap.get(RevColorSensorV3.class, "testi2c");
         RevColorSensorV3 c2 = hardwareMap.get(RevColorSensorV3.class, "testi2cFAST");
 
-
         startTimer.log();
         waitForStart();
         Timer motorState = new Timer("Switch Motor State to Reset -> Use Encoder");
@@ -72,5 +73,16 @@ public class BenchMarker extends LinearOpMode {
         blackboard.put("allinace",0);
         blackboard.get("allinace");
         blacksboard.log();
+        Timer i2c = new Timer("I2CFast");
+        NormalizedRGBA colors = c2.getNormalizedColors();
+        double distance = c2.getDistance(DistanceUnit.INCH);
+        c2.enableLed(true);
+        i2c.log();
+        Timer i2cslow = new Timer("I2C");
+        NormalizedRGBA colors2 = c1.getNormalizedColors();
+        double distance2 = c1.getDistance(DistanceUnit.INCH);
+        c1.enableLed(true);
+        i2cslow.log();
+
     }
 }
