@@ -15,11 +15,20 @@ public final class Config {
 
     //TODO: If you have other ones, add them here
     static {
-        hardwareMap.put("genericMotor", HardwareType.MOTOR);
-        hardwareMap.put("pitchServo1", HardwareType.SERVO);
-        hardwareMap.put("pitchServo2", HardwareType.SERVO);
-        hardwareMap.put("pitchServo3", HardwareType.SERVO);
-        hardwareMap.put("pitchServo4", HardwareType.SERVO);
+        hardwareMap.put("motor1", HardwareType.MOTOR);
+        hardwareMap.put("motor2", HardwareType.MOTOR);
+        hardwareMap.put("motor3", HardwareType.MOTOR);
+        hardwareMap.put("motor4", HardwareType.MOTOR);
+        hardwareMap.put("servo1", HardwareType.SERVO);
+        hardwareMap.put("servo2", HardwareType.SERVO);
+        hardwareMap.put("servo3", HardwareType.SERVO);
+        hardwareMap.put("servo4", HardwareType.SERVO);
+        hardwareMap.put("servo5", HardwareType.SERVO);
+        hardwareMap.put("servo6", HardwareType.SERVO);
+        hardwareMap.put("servo7", HardwareType.SERVO);
+        hardwareMap.put("Webcam 1", HardwareType.CAMERA);
+
+
       //  hardwareMap.put("blink", HardwareType.BLINKIN);
       //  hardwareMap.put("imu", HardwareType.IMU);
       //  hardwareMap.put("imu2", HardwareType.IMU);

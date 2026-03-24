@@ -82,7 +82,11 @@ public final class ConfigRegistrar {
             }else if (type == HardwareType.EXTERNAL_ENCODER){
                 // cant add external encoder
             }
-        });
+
+
+        });config = config
+                .addCamera("Webcam 1","_____")
+                .addModule(ConfigMaker.ModuleType.EXPANSION_HUB,"Expansion Hub 1",1);
     }
 
     static boolean isEnabled = true;
