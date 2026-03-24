@@ -24,7 +24,8 @@ public final class ConfigRegistrar {
 
     static {
         bench.addMotor("motor", ConfigMaker.ModuleType.CONTROL_HUB, ConfigMaker.MotorType.RevRoboticsUltraplanetaryHDHexMotor,0)
-                .addModule(ConfigMaker.ModuleType.EXPANSION_HUB, "Expansion Hub 1",1)
+                .addModule_detect()
+                .addIMU_detect(ConfigMaker.ModuleType.CONTROL_HUB)
                 .addDevice("testi2c",ConfigMaker.ModuleType.CONTROL_HUB,ConfigMaker.DeviceType.RevColorSensorV3,3)
                 .addDevice("testi2cFAST",ConfigMaker.ModuleType.CONTROL_HUB,ConfigMaker.DeviceType.RevColorSensorV3,0);;
 
@@ -97,7 +98,7 @@ public final class ConfigRegistrar {
     @OpModeRegistrar
     public static void register(OpModeManager manager) {
         if (!isEnabled) return;
-        //manager.register(metaForClass(ConfigCreator.class), new ConfigCreator(config));
+        manager.register(config.metaData(), new ConfigCreator(config));
         manager.register(bench.metaData(), new ConfigCreator(bench));
     }
 }
