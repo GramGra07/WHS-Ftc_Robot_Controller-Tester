@@ -13,7 +13,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.config.ConfigCreator;
 import org.gentrifiedApps.gentrifiedAppsUtil.config.ConfigMaker;
 
 public final class ConfigRegistrar {
-    static ConfigMaker bench= new ConfigMaker("BenchConfig");
+    static ConfigMaker bench= new ConfigMaker("bench");
 
     static ConfigMaker config = new ConfigMaker("tester");
     static int motorCount = 0;
@@ -84,6 +84,10 @@ public final class ConfigRegistrar {
                 // cant add external encoder
             }
         });
+        // test specific
+        config = config
+                .addCamera("Webcam 1","_____") // make these detect
+                .addModule(ConfigMaker.ModuleType.EXPANSION_HUB,"Expansion Hub 1",1);
     }
 
     static boolean isEnabled = true;
@@ -94,7 +98,7 @@ public final class ConfigRegistrar {
     @OpModeRegistrar
     public static void register(OpModeManager manager) {
         if (!isEnabled) return;
-        manager.register(config.metaData(), new ConfigCreator(config));
-        manager.register(bench.metaData(), new ConfigCreator(bench));
+        manager.register(config.metaData(), new ConfigCreator(config) {});
+        manager.register(bench.metaData(), new ConfigCreator(bench) {});
     }
 }

@@ -19,6 +19,7 @@ public class Approvals {
         double i2cLimit = 4;
         double analogLimit = 4;
         double digitalLimit = 8;
+        double usbLimit = 2;
         for (Map.Entry<HardwareType, PortType> entry : portMap.entrySet()) {
             double count = Util.count(entry.getKey());
             double limit = 0;
@@ -38,6 +39,9 @@ public class Approvals {
                     break;
                 case DIGITAL:
                     limit = digitalLimit;
+                    break;
+                case USB:
+                    limit = usbLimit;
                     break;
             }
             limit *= hubCount;
