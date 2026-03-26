@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpModeRegistrar;
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta;
 
 import org.firstinspires.ftc.teamcode.enums.HardwareType;
-import org.gentrifiedApps.gentrifiedAppsUtil.config.ConfigMaker;
 import org.gentrifiedApps.gentrifiedAppsUtil.config.ConfigCreator;
+import org.gentrifiedApps.gentrifiedAppsUtil.config.ConfigMaker;
 
 public final class ConfigRegistrar {
     static ConfigMaker bench= new ConfigMaker("bench");
@@ -25,7 +25,7 @@ public final class ConfigRegistrar {
     static {
         bench.addMotor("motor", ConfigMaker.ModuleType.CONTROL_HUB, ConfigMaker.MotorType.RevRoboticsUltraplanetaryHDHexMotor,0)
                 .addModule_detect()
-                        .addIMU_detect(ConfigMaker.ModuleType.CONTROL_HUB)
+                .addIMU_detect(ConfigMaker.ModuleType.CONTROL_HUB)
                 .addDevice("testi2c",ConfigMaker.ModuleType.CONTROL_HUB,ConfigMaker.DeviceType.RevColorSensorV3,3)
                 .addDevice("testi2cFAST",ConfigMaker.ModuleType.CONTROL_HUB,ConfigMaker.DeviceType.RevColorSensorV3,0);;
 
