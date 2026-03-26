@@ -13,7 +13,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.config.ConfigMaker;
 import org.gentrifiedApps.gentrifiedAppsUtil.config.ConfigCreator;
 
 public final class ConfigRegistrar {
-    static ConfigMaker bench= new ConfigMaker("BenchConfig");
+    static ConfigMaker bench= new ConfigMaker("bench");
 
     static ConfigMaker config = new ConfigMaker("tester");
     static int motorCount = 0;
@@ -25,7 +25,7 @@ public final class ConfigRegistrar {
     static {
         bench.addMotor("motor", ConfigMaker.ModuleType.CONTROL_HUB, ConfigMaker.MotorType.RevRoboticsUltraplanetaryHDHexMotor,0)
                 .addModule_detect()
-                .addIMU_detect(ConfigMaker.ModuleType.CONTROL_HUB)
+                        .addIMU_detect(ConfigMaker.ModuleType.CONTROL_HUB)
                 .addDevice("testi2c",ConfigMaker.ModuleType.CONTROL_HUB,ConfigMaker.DeviceType.RevColorSensorV3,3)
                 .addDevice("testi2cFAST",ConfigMaker.ModuleType.CONTROL_HUB,ConfigMaker.DeviceType.RevColorSensorV3,0);;
 
@@ -83,10 +83,10 @@ public final class ConfigRegistrar {
             }else if (type == HardwareType.EXTERNAL_ENCODER){
                 // cant add external encoder
             }
-
-
-        });config = config
-                .addCamera("Webcam 1","_____")
+        });
+        // test specific
+        config = config
+                .addCamera("Webcam 1","_____") // make these detect
                 .addModule(ConfigMaker.ModuleType.EXPANSION_HUB,"Expansion Hub 1",1);
     }
 
@@ -98,7 +98,7 @@ public final class ConfigRegistrar {
     @OpModeRegistrar
     public static void register(OpModeManager manager) {
         if (!isEnabled) return;
-        manager.register(config.metaData(), new ConfigCreator(config));
-        manager.register(bench.metaData(), new ConfigCreator(bench));
+        manager.register(config.metaData(), new ConfigCreator(config) {});
+        manager.register(bench.metaData(), new ConfigCreator(bench) {});
     }
 }

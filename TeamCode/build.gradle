@@ -35,7 +35,7 @@ repositories {
 dependencies {
     implementation project(':FtcRobotController')
 
-    implementation "com.github.GramGra07:GentrifiedAppsUtil:4.8.9.2"
+    implementation "com.github.GramGra07:GentrifiedAppsUtil:4.8.9.4"
 
     //implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
 }

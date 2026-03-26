@@ -11,6 +11,7 @@ import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta;
 import org.firstinspires.ftc.teamcode.enums.HardwareType;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,7 @@ public final class Registrar {
     @OpModeRegistrar
     public static void register(OpModeManager manager) {
         for (Class<? extends OpMode> opModeClass : opModeClasses) {
-            for (HardwareType type: Config.hardwareMap.values()) { // only registers that which you are using
+            for (HardwareType type:new HashSet<>(Config.hardwareMap.values())) { // only registers that which you are using
                 manager.register(
                         metaForClass(opModeClass, type),
                         createInstance(opModeClass, type)

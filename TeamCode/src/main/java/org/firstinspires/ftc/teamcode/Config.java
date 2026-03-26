@@ -25,9 +25,7 @@ public final class Config {
         hardwareMap.put("servo4", HardwareType.SERVO);
         hardwareMap.put("servo5", HardwareType.SERVO);
         hardwareMap.put("servo6", HardwareType.SERVO);
-        hardwareMap.put("servo7", HardwareType.SERVO);
         hardwareMap.put("Webcam 1", HardwareType.CAMERA);
-
 
       //  hardwareMap.put("blink", HardwareType.BLINKIN);
       //  hardwareMap.put("imu", HardwareType.IMU);
